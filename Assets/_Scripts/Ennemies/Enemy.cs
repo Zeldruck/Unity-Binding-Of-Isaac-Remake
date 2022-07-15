@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Interfaces;
 using UnityEngine;
@@ -18,12 +19,14 @@ public class Enemy : MonoBehaviour, IDamageable
     protected virtual void Awake()
     {
         animator = GetComponent<Animator>();
-        
-        // TEMP
-        players = FindObjectsOfType<Player>();
     }
 
     protected virtual void Start()
+    {
+        players = Array.Empty<Player>();
+    }
+
+    public virtual void Initialize()
     {
         StartCoroutine(SwapTarget());
     }
@@ -34,6 +37,9 @@ public class Enemy : MonoBehaviour, IDamageable
         
         while (true)
         {
+            if (players == null)
+                players = FindObjectsOfType<Player>();
+            
             SearchCloserTarget();
             
             yield return wfs;

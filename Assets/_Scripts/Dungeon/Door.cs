@@ -38,8 +38,8 @@ public class Door : MonoBehaviour
 
     public void DoorState(bool _isClosed)
     {
-        sr.enabled = isClosed;
-        col.isTrigger = !isClosed;
+        sr.enabled = _isClosed;
+        col.isTrigger = !_isClosed;
         
         if (isClosed == _isClosed)
             // Sound
@@ -87,6 +87,8 @@ public class Door : MonoBehaviour
 
         if (players.Count >= nbPlayers)
         {
+            nextRoom.RoomEntitiesState(true);
+            
             CameraManager.instance.SwapRoom(nextRoom, (() =>
             {
                 nextRoom.SwapToThisRoom();

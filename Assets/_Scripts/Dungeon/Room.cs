@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Utility;
+using Random = UnityEngine.Random;
 
 public class Room : MonoBehaviour
 {
@@ -108,6 +110,8 @@ public class Room : MonoBehaviour
 
     #region GameRoom
 
+    private List<Enemy> ennemies;
+
     private bool isCombatRoom;
     private bool isFrozen;
     private bool isClear;
@@ -136,6 +140,50 @@ public class Room : MonoBehaviour
         {
             isClear = true;
         }
+        
+        SpawnEntities();
+    }
+
+    private void SpawnEntities()
+    {
+        if (isCombatRoom)
+        {
+            ennemies = new List<Enemy>();
+            
+            for (int i = 0; i < monsterSpawnPointsParent.childCount; i++)
+            {
+                int randEnemy = Random.Range(0, monsterPrefabs.Length);
+                GameObject nEnemy = Instantiate(monsterPrefabs[randEnemy],
+                    monsterSpawnPointsParent.GetChild(i).position, Quaternion.identity);
+                Enemy enemy = nEnemy.GetComponent<Enemy>();
+                enemy.Initialize();
+                
+                ennemies.Add(enemy);
+
+                nEnemy.SetActive(false);
+            }
+        }
+
+        if (lootSpawnPointsParent != null && lootSpawnPointsParent.childCount > 0)
+        {
+            for (int i = 0; i < lootSpawnPointsParent.childCount; i++)
+            {
+                int rand = Random.Range(0, lootPrefabs.Length);
+                GameObject nLoot = Instantiate(lootPrefabs[rand],
+                    lootSpawnPointsParent.GetChild(i).position, Quaternion.identity);
+            }
+        }
+    }
+
+    public void RoomEntitiesState(bool _isShowing)
+    {
+        if (ennemies == null || ennemies.Count <= 0) 
+            return;
+        
+        foreach (Enemy enemy in ennemies)
+        {
+            enemy.gameObject.SetActive(_isShowing);
+        }
     }
 
     public void CloseOtherDoors(Door _doorOpen)
@@ -152,7 +200,7 @@ public class Room : MonoBehaviour
     public void SwapToThisRoom()
     {
         isFrozen = false;
-        
+
         if (isClear)
         {
             foreach (Door door in doors)

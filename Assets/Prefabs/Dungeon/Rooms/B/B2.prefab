@@ -349,12 +349,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 470b2ed90df264a4a879fa614b03baa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ownDoors:
+    T: 0
+    R: 0
+    B: 0
+    L: 0
   spawnPointsParent: {fileID: 991850999015508556}
   doorsParent: {fileID: 1880886851618350255}
   monsterSpawnPointsParent: {fileID: 7554718790896202951}
-  monsterPrefabs: []
+  monsterPrefabs:
+  - {fileID: 7826866273677460074, guid: 936a6769927b09c479a0af09e015daf4, type: 3}
+  - {fileID: 1052569514821527344, guid: df50b33af77d73f4081b69b6050d4a7a, type: 3}
+  - {fileID: 722972884451665676, guid: cf7a601dac3fe654a9c7b94c97850d08, type: 3}
   lootSpawnPointsParent: {fileID: 9123052772070988935}
-  lootPrefabs: []
+  lootPrefabs:
+  - {fileID: 5619194868327645056, guid: 805ec87b7acdfc140849cb99a8c71916, type: 3}
+  - {fileID: 5619194868327645056, guid: 9f41c4f06be62d6488997c3d1bbe1dae, type: 3}
+  - {fileID: 4202017825892607634, guid: c4fde1d77a2edbc44937fad807f47e3c, type: 3}
 --- !u!50 &60761247666474928
 Rigidbody2D:
   serializedVersion: 4

@@ -21,6 +21,8 @@ public class CharacterSelectionManager : MonoBehaviour
 
     [SerializeField] private SCharacter[] characters;
     [SerializeField] private CharacterSelection[] selections;
+    [Space]
+    [SerializeField] private GameObject loadingScreen;
     
     private int[] characterChoosed;
 
@@ -61,6 +63,8 @@ public class CharacterSelectionManager : MonoBehaviour
     {
         transform.SetParent(null);
         DontDestroyOnLoad(gameObject);
+
+        loadingScreen.SetActive(true);
 
         int nbPlayer = 0;
 
