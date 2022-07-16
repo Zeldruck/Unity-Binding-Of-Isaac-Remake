@@ -14,11 +14,14 @@ public class Enemy : MonoBehaviour, IDamageable
     
     [SerializeField] protected float timeSwapTarget;
     [Space]
+    [SerializeField] private int startHealth;
     [SerializeField] protected float speed;
     
     protected virtual void Awake()
     {
         animator = GetComponent<Animator>();
+
+        health = startHealth;
     }
 
     protected virtual void Start()

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Interfaces;
+using MoreMountains.Feedbacks;
 using UnityEngine;
 
 public class Slime : Enemy
@@ -15,6 +16,7 @@ public class Slime : Enemy
     [SerializeField] private LayerMask playerMask;
     [SerializeField] private float attackRange;
     [SerializeField] private int damage;
+    [Space] [SerializeField] private MMFeedbacks hitFeedbacks;
 
     protected override void Start()
     {
@@ -79,6 +81,20 @@ public class Slime : Enemy
     {
         attackTimer.UpdateTimer(Time.deltaTime);
         stunTimer.UpdateTimer(Time.deltaTime);
+    }
+
+    public override void TakeDamage(int _damages)
+    {
+        base.TakeDamage(_damages);
+        
+        hitFeedbacks?.PlayFeedbacks();
+    }
+
+    public override void TakeDamage(int _damages, Vector2 _point, float _force)
+    {
+        base.TakeDamage(_damages, _point, _force);
+        
+        hitFeedbacks?.PlayFeedbacks();
     }
 
     private void OnDrawGizmosSelected()
