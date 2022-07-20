@@ -337,7 +337,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialRoom: {fileID: 164653296}
-  nbRoomToSpawn: 20
+  nbRoomToSpawn: 40
 --- !u!1 &1401180991
 GameObject:
   m_ObjectHideFlags: 0

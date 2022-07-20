@@ -11,6 +11,9 @@ public class Enemy : MonoBehaviour, IDamageable
     protected int indexPlayerTarget;
 
     protected int health;
+
+    public delegate void OnDead();
+    private OnDead onDead;
     
     [SerializeField] protected float timeSwapTarget;
     [Space]
@@ -29,9 +32,12 @@ public class Enemy : MonoBehaviour, IDamageable
         players = Array.Empty<Player>();
     }
 
-    public virtual void Initialize()
+    public virtual void Initialize(OnDead _onDead)
     {
-        StartCoroutine(SwapTarget());
+        if (_onDead == null)
+            return;
+        
+        onDead = _onDead;
     }
 
     private IEnumerator SwapTarget()
@@ -40,10 +46,12 @@ public class Enemy : MonoBehaviour, IDamageable
         
         while (true)
         {
-            if (players == null)
+            if (players == null || players.Length == 0)
                 players = FindObjectsOfType<Player>();
             
             SearchCloserTarget();
+            
+            Debug.Log("There looping");
             
             yield return wfs;
         }
@@ -82,9 +90,12 @@ public class Enemy : MonoBehaviour, IDamageable
     public virtual void TakeDamage(int _damages)
     {
         health -= _damages;
-        
+
         if (health <= 0)
+        {
+            onDead?.Invoke();
             Destroy(gameObject);
+        }
     }
 
     public virtual void TakeDamage(int _damages, Vector2 _point, float _force)
@@ -92,8 +103,16 @@ public class Enemy : MonoBehaviour, IDamageable
         health -= _damages;
         
         // Push
-        
+
         if (health <= 0)
+        {
+            onDead?.Invoke();
             Destroy(gameObject);
+        }
+    }
+
+    private void OnEnable()
+    {
+        StartCoroutine(SwapTarget());
     }
 }

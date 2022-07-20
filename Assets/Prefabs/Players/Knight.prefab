@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerId: 0
-  speed: 3
+  speed: 5
   grabRange: 0.5
   grabLayer:
     serializedVersion: 2

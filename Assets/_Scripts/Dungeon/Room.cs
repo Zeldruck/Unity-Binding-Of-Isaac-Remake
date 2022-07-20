@@ -77,14 +77,21 @@ public class Room : MonoBehaviour
         }
     }
     
-    public void InitializeDistances(Transform _initialRoom)
+    public void InitializeDistances(Transform _initialRoom, int _floor)
     {
         initialRoom = _initialRoom;
+        floor = _floor;
         
         for (int i = 0; i < spawners.Length; i++)
         {
             spawners[i].CalculateDistance(initialRoom);
         }
+    }
+
+    public void InitializeBossRoom(GameObject _boss)
+    {
+        isBossRoom = true;
+        boss = _boss;
     }
 
     public RoomSpawner[] GetSpawnerArray()
@@ -112,6 +119,11 @@ public class Room : MonoBehaviour
 
     private List<Enemy> ennemies;
 
+    private int floor;
+    
+    private bool isBossRoom;
+    private GameObject boss;
+    
     private bool isCombatRoom;
     private bool isFrozen;
     private bool isClear;
@@ -155,8 +167,9 @@ public class Room : MonoBehaviour
                 int randEnemy = Random.Range(0, monsterPrefabs.Length);
                 GameObject nEnemy = Instantiate(monsterPrefabs[randEnemy],
                     monsterSpawnPointsParent.GetChild(i).position, Quaternion.identity);
+                nEnemy.transform.SetParent(transform);
                 Enemy enemy = nEnemy.GetComponent<Enemy>();
-                enemy.Initialize();
+                enemy.Initialize(() => EnemyDeath(enemy));
                 
                 ennemies.Add(enemy);
 
@@ -207,6 +220,17 @@ public class Room : MonoBehaviour
             {
                 door.DoorState(false);
             }
+        }
+    }
+
+    private void EnemyDeath(Enemy _enemy)
+    {
+        ennemies.Remove(_enemy);
+
+        if (ennemies.Count == 0)
+        {
+            isClear = true;
+            SwapToThisRoom();
         }
     }
 

@@ -17,7 +17,9 @@ public class RoomTemplates : MonoBehaviour
     public GameObject[] LBT;
     public GameObject[] RBT;
     public GameObject[] TLR;
-
+    [Space]
+    public GameObject[] bosses;
+    
     public GameObject GetGoodRoom(SDoors _doors)
     {
         if (_doors.B && !_doors.R && !_doors.L && !_doors.T)

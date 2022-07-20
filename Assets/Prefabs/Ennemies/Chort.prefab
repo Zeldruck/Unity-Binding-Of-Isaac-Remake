@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeSwapTarget: 10
+  startHealth: 0
   speed: 1.5
   playerMask:
     serializedVersion: 2

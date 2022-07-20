@@ -5,6 +5,8 @@ using Utility;
 
 public class RoomSpawnerManager : MonoBehaviour
 {
+    public static RoomSpawnerManager instance;
+    
     private RoomTemplates roomTemplates;
     
     private Heap<RoomSpawner> roomsToSpawn;
@@ -17,8 +19,12 @@ public class RoomSpawnerManager : MonoBehaviour
     [SerializeField] private GameObject initialRoom;
     [SerializeField] private int nbRoomToSpawn;
 
+    public int floor = 0;
+
     private void Awake()
     {
+        instance = this;
+        
         roomTemplates = GetComponent<RoomTemplates>();
 
         roomsToSpawn = new Heap<RoomSpawner>(nbRoomToSpawn);
@@ -31,7 +37,7 @@ public class RoomSpawnerManager : MonoBehaviour
         onSpawnFinish = _onSpawnFinish;
         
         Room initialRoomInit = initialRoom.GetComponent<Room>();
-        initialRoomInit.InitializeDistances(initialRoom.transform);
+        initialRoomInit.InitializeDistances(initialRoom.transform, floor);
 
         RoomSpawner[] roomsInit = initialRoomInit.GetSpawnerArray();
         for (int i = 0; i < roomsInit.Length; i++)
@@ -55,7 +61,7 @@ public class RoomSpawnerManager : MonoBehaviour
 
             if (room != null)
             {
-                room.InitializeDistances(initialRoom.transform);
+                room.InitializeDistances(initialRoom.transform, floor);
                 
                 RoomSpawner[] roomSpawners = room.GetSpawnerArray();
 
@@ -71,7 +77,7 @@ public class RoomSpawnerManager : MonoBehaviour
                 if (roomsToSpawn.Count == 0)
                 {
                     // Boss room
-                    
+                    room.InitializeBossRoom(roomTemplates.bosses[floor >= roomTemplates.bosses.Length ? roomTemplates.bosses.Length-1 : floor]);
                 }
                 
                 roomsToInitialize.Add(room);

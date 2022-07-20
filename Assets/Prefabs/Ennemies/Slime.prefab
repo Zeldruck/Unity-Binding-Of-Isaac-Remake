@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 722972884451665671}
   - component: {fileID: 722972884451665674}
   - component: {fileID: 722972884451665675}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Slime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,12 +100,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeSwapTarget: 10
+  startHealth: 0
   speed: 1
   playerMask:
     serializedVersion: 2
     m_Bits: 64
   attackRange: 0.5
   damage: 0
+  hitFeedbacks: {fileID: 0}
 --- !u!70 &722972884451665674
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
